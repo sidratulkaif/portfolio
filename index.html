@@ -17,6 +17,48 @@
     
     <style>
         :root {
+            /* Add to your existing :root */
+  /* ... your existing variables ... */
+  
+  /* Dark mode colors */
+  --dark-bg: #0f172a;
+  --dark-text: #f8fafc;
+  --dark-primary: #10b981;
+  --dark-neon: #00ff9d;
+}
+
+/* Add dark mode overrides */
+.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode .holographic-card,
+.dark-mode .service-card,
+.dark-mode .project-card,
+.dark-mode .testimonial-card,
+.dark-mode .blog-card,
+.dark-mode .contact-form {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-color: var(--dark-neon);
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4 {
+  color: var(--dark-neon);
+}
+
+.dark-mode .btn-outline {
+  color: var(--dark-neon);
+  border-color: var(--dark-neon);
+}
+
+.dark-mode .btn-outline:hover {
+  background-color: var(--dark-neon);
+  color: var(--dark-bg);
+}
             --primary: #10b981;
             --primary-dark: #059669;
             --primary-light: #d1fae5;
@@ -1875,13 +1917,33 @@
             });
         });
 
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            themeToggle.innerHTML = document.body.classList.contains('dark-mode') 
-                ? '<i class="fas fa-sun"></i>' 
-                : '<i class="fas fa-moon"></i>';
+        // Theme Toggle - Fixed Version
+const themeToggle = document.getElementById('themeToggle');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+// Check for saved theme preference or system preference
+const currentTheme = localStorage.getItem('theme') || 
+                    (prefersDarkScheme.matches ? 'dark' : 'light');
+
+if (currentTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+  themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+} else {
+  document.body.classList.remove('dark-mode');
+  themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+}
+
+themeToggle.addEventListener('click', () => {
+  const isDark = document.body.classList.toggle('dark-mode');
+  
+  if (isDark) {
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    localStorage.setItem('theme', 'light');
+  }
+});
             
             // Save preference to localStorage
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
@@ -2069,13 +2131,19 @@
 
         // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            // Hide loading screen after 1.5 seconds
-            setTimeout(() => {
-                document.getElementById('loadingScreen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').style.display = 'none';
-                }, 500);
-            }, 1500);
+  // ... your existing initialization code ...
+  
+  // Initialize theme
+  const currentTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+  
+  // ... rest of your initialization ...
+});
 
             // Initialize components
             initThreeJS();
