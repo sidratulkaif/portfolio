@@ -1,0 +1,14 @@
+portfolio/
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   ├── main.js
+│   ├── threejs-background.js
+│   └── ai-assistant.js
+├── images/
+│   ├── logo.png
+│   ├── hero-image.jpg
+│   └── other images...
+└── assets/
+    └── any other assets...
